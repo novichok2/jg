@@ -1,14 +1,14 @@
-var h_hght = 175; // высота шапки
-var h_mrg = 30;    // отступ когда шапка уже не видна    
+var h_hght = 150; // высота шапки
+var h_mrg = 10;    // отступ когда шапка уже не видна    
 
        
                  
 $(function(){ 
     var elem = $('#menuScroll');
-    var top = $(this).scrollTop(); 
-    var left = $(this).scrollLeft();   
-    var h_max = $(document).outerHeight(true) - $('footer').height();
+    var top = $(this).scrollTop();    
+    var h_max = $(document).outerHeight(true) - $('footer').height() - $('#addFoter').height();
     var h_menu = $('#menuScroll').height();
+    var left = $(this).scrollLeft();
     //alert(h_max);  
     //alert($(document).outerHeight(true));      
      
@@ -17,8 +17,8 @@ $(function(){
     }           
      
     $(window).scroll(function(){
-        top = $(this).scrollTop();   
-        left = $(this).scrollLeft();      
+        top = $(this).scrollTop();
+        left = $(this).scrollLeft();         
         if (top+h_mrg < h_hght) {
             elem.css('top', (h_hght-top));
             elem.css('left', (-left));
@@ -32,7 +32,7 @@ $(function(){
 	//var scrollTop = window.pageYOffset ? window.pageYOffset : (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
 
     //if((documentHeight - clientHeight) <= scrollTop)
-	if( h_max - h_menu - h_mrg <= $(this).scrollTop())
+	if( h_max - h_menu - h_mrg - 100 <= $(this).scrollTop())
      {
 	 elem.hide();
 	 }

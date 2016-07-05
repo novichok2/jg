@@ -1,3 +1,4 @@
+<div>
 <?php // Do not delete these lines
 	if ('comments.php' == basename($_SERVER['SCRIPT_FILENAME']))
 		die ('Please do not load this page directly. Thanks!');
@@ -13,12 +14,10 @@
             }
         }
 
-		/* This variselectionable is for alternating comment background */
+		/* This variable is for alternating comment background */
 		$oddcomment = 'alt';
 ?>
-
 <!-- You can start editing here. -->
-
 <?php if ($comments) : ?>
 	<h3 id="comments"><?php comments_number('No Responses', 'One Response', '% Responses' );?> to &#8220;<?php the_title(); ?>&#8221;</h3> 
 
@@ -52,19 +51,22 @@
 		
 	<?php endif; ?>
 <?php endif; ?>
+<!--
 <p class="commentsfeed">
-<?php if ($post->ping_status == "open") { ?>
+<?php 
+/* if ($post->ping_status == "open") { ?>
 	<span class="trackback"><a href="<?php trackback_url(display); ?>">Trackback URI</a></span> | 
 <?php } ?>
 <?php if ($post-> comment_status == "open") {?>
 	<span class="feed"><?php comments_rss_link('Comments RSS'); ?></span>
-<?php }; ?>
+<?php }; */ 
+?>
 </p>
-
+!-->
 
 <?php if ('open' == $post-> comment_status) : ?>
 
-<h3 id="respond">Leave a Reply</h3>
+<h3 id="respond">Оставить комментарий</h3>
 
 <?php if ( get_option('comment_registration') && !$user_ID ) : ?>
 <p>You must be <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?redirect_to=<?php the_permalink(); ?>">logged in</a> to post a comment.</p>
@@ -74,7 +76,7 @@
 
 <?php if ( $user_ID ) : ?>
 
-<p>Logged in as <a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a>. <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="<?php _e('Log out of this account') ?>">Logout &raquo;</a></p>
+"<a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a>" <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="<?php _e('Log out of this account') ?>">Выйти</a>
 
 <?php else : ?>
 
@@ -93,7 +95,7 @@
 
 <p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
 
-<p class="bottom"><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" />
+<p class="bottom"><input name="submit" type="submit" id="submit" tabindex="5" value="Добавить" />
 <input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
 </p>
 <?php do_action('comment_form', $post->ID); ?>
@@ -103,3 +105,4 @@
 <?php endif; // If registration required and not logged in ?>
 
 <?php endif; // if you delete this the sky will fall on your head ?>
+</div>

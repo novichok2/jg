@@ -1,29 +1,12 @@
+<div id="addFoter">
+<?php 
+    $text = $_SERVER["REQUEST_URI"];
+    if (strripos($text, "buy-gold")  == true) {include "footerGirl.php";} 
+     else {include "footerNorm.php";};            
+?>	
 </div>
- <footer>
-        <div id="money">
-            <div id="tableMoney" class="row money">
-                <div id="tdMoneyGirl" class="tdMoney"></div>
-                <div id="tdMoneyMain" class="row">
-                    <div class="colComit span6">
-                         <textarea name="comment" placeholder="Опишите возникший вопрос или предложение" id="mainCommit"></textarea> 
-                    </div>
-                    <div class="colComit span6">
-                        <div class="row"><input class="inCommit" placeholder="Как к вам обращаться?" name="nikComment" type="text"/></div>
-                        <div class="row"><input class="inCommit" placeholder="Тема вашего сообщения?" name="themeComment" type="text"/></div>
-                        <div class="row">
-                            <div class="span3">Капча</div>
-                            <div class="span3"><input type="submit" value="Отправить" name="sendCommit"/></div>                            
-                        </div>
-                    </div>
-                    <div  class="row">            
-                        <div id="moneyIcon" class="span12">
-                            Билайн Мтс Папал КиваВалет Связной Яндекс Моней ЛикюПей ВебМоней Виза МастерКард
-                        </div>
-                    </div>
-                 </div>
-                 <div class="span2">2</div>
-             </div>       
-        </div>
+</div>
+ <footer>        
 		<div id="ContextVipad">
 			херня<br/><br/><br/><br/><br/>ВсяКАЯ
 			<br/><br/><br/><br/><br/>и так далее
@@ -58,8 +41,8 @@
                             <ul id="ulFooter2">
                                 <li><a href="#">Archeage</a></li>
                                 <li><a href="#">Allods</a></li>
-                                <li><a class="goldGame2" href="#">Lineage 2</a></li>
-                                <li><a class="goldGame2" href="#">Lineage 2 Classic</a></li>
+                                <li><a id="goldGame2" href="#">Lineage 2</a></li>
+                                <li><a id="goldGame2" href="#">Lineage 2 Classic</a></li>
                             </ul>
                         </td>
 						<td id="spaceFooterOther4"></td>
@@ -68,7 +51,7 @@
                                 <li><a href="#">Blade and soul</a></li>
                                 <li><a href="#">Black Desert</a></li>
                                 <li><a href="#">Tera Online</a></li>
-                                <li><a class="goldGame2" href="#">WoW</a></li>
+                                <li><a id="goldGame2" href="#">WoW</a></li>
                             </ul>
                         </td>
 						<td id="spaceFooterOther4"></td>
@@ -88,7 +71,11 @@
                     <tbody>
                         <tr>
                             <td id="spaceImgFooterL"></td>
-                            <td class="tdHead"><img src="<?php echo get_stylesheet_directory_uri()?>/images/jet.png"></td>
+                            <td class="tdHead" id="jetImg">
+                                <a href="<?php echo home_url();?>">
+                                    <img src="<?php echo get_stylesheet_directory_uri()?>/images/jet.png">
+                                </a>
+                            </td>
                             <td id="spaceImgFooterR"></td>
                             <td class="tdHead" id="textJet">
                                 <span class="spanJetGnomeFooter">JET<span id="spanGnome">GNOME</span>.COM</span>
@@ -114,6 +101,7 @@
                             <td id="languageFooter">
                                 <span id="languagesFooter"><a href="#">RU</a> | <a href="#">EN</a></span>
                             </td>
+                            <td id="socialFooterSpace5"></td>
                         </tr>
                     </tbody>
                 </table>

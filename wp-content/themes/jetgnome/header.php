@@ -12,13 +12,55 @@
 	<link rel="alternate" type="text/xml" title="RSS .92" href="<?php bloginfo('rss_url'); ?>" />
 	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="<?php bloginfo('atom_url'); ?>" />
     <link href="<?php echo get_template_directory_uri()?>/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>    
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>	
+    <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri()?>/js/mg.js"></script>
+    <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri()?>/js/jquery.bez.min.js"></script>    
+    <script type="text/javascript">
+        
+    // bezier animations
+    var bez = $.bez([.19,1,.22,1]);
+    var bezcss = ".19,1,.22,1";
+    /* Get css3 transition and transform prefixes */
+    function mg_getProperty(arr0, arr1, arr2){
+        var tmp = document.createElement("div");
+        for(var i=0, len=arr0.length; i<len; i++){
+            tmp.style[arr0[i]] = 800;
+            if(typeof tmp.style[arr0[i]] == 'string'){
+                return {
+                    js: arr0[i],
+                    css: arr1[i],
+                    jsEnd: arr2[i]
+                };
+            }
+        }
+        return null;
+    }
+    function mg_getTransition(){
+        var arr0 = ["transition", "msTransition", "MozTransition", "WebkitTransition", "OTransition", "KhtmlTransition"];
+        var arr1 = ["transition", "-ms-transition", "-moz-transition", "-webkit-transition", "-o-transition", "-khtml-transition"];
+        var arr2 = ["transitionend", "MSTransitionEnd", "transitionend", "webkitTransitionEnd", "oTransitionEnd", "khtmlTransitionEnd"];
+        return mg_getProperty(arr0, arr1, arr2);
+    }
+    function mg_getTransform(){
+        var arr0 = ["transform", "msTransform", "MozTransform", "WebkitTransform", "OTransform", "KhtmlTransform"];
+        var arr1 = ["transform", "-ms-transform", "-moz-transform", "-webkit-transform", "-o-transform", "-khtml-transform"];
+        return mg_getProperty(arr0, arr1, []);
+    }
+    function mg_getPerspective(){
+        var arr0 = ["perspective", "msPerspective", "MozPerspective", "WebkitPerspective", "OPerspective", "KhtmlPerspective"];
+        var arr1 = ["perspective", "-ms-perspective", "-moz-perspective", "-webkit-perspective", "-o-perspective", "-khtml-perspective"];
+        return mg_getProperty(arr0, arr1, []);
+    }
+    var transition = mg_getTransition();
+    var transform = mg_getTransform();
+    var perspective = mg_getPerspective();
+    </script> 
+    
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="<?php echo get_template_directory_uri()?>/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
    	<?php wp_get_archives('type=monthly&format=link'); ?>
 	<?php //comments_popup_script(); // off by default ?>
-	<?php wp_head(); ?>
+	<?php wp_head(); ?>       
+
 </head>
 
 <body>
@@ -28,10 +70,14 @@
                 <tbody>
                     <tr>
                         <td id="spanImg"></td>
-                        <td class="tdHead"><img id="imgJet" src="<?php echo get_stylesheet_directory_uri()?>/images/jet.png"></td>
-                        <td id="spanImg"></td>
-                        <td class="tdHead" id="textJet">
-                            <span class="spanJetGnome">JET<span id="spanGnome">GNOME</span>.COM</span>
+                        <td class="tdHead" id="jetImg">
+                            <a href="<?php echo home_url();?>">
+                                <img id="imgJet" src="<?php echo get_stylesheet_directory_uri()?>/images/jet.png">
+                            </a>
+                        </td>
+                        <td id="spanImg2"></td>
+                        <td class="tdHead">
+                            <span id="spanJetGnome">JET<span id="spanGnome">GNOME</span>.COM</span>
                         </td>
                         <td>
                             <a class="aHead" href="#">ВХОД</a>

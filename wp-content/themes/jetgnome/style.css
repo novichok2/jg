@@ -29,16 +29,44 @@
 	src: url('fonts/ropasansscproregular.ttf');	
 }
 
+@font-face {
+	font-family: 'supermolotReg';
+	src: url('fonts/supermolotReg.ttf');	
+}
+
+@font-face {
+	font-family: 'boxedregularbold';
+	src: url('fonts/boxedregularbold.ttf');	
+}
+
+@font-face {
+	font-family: 'supermolotbold';
+	src: url('fonts/supermolotbold.ttf');	
+}
+
 body {
 	font: 12px boxedmedium, sans-serif;
-    min-width: 1280px;
+    display: inline-block;
     color: #ffffff;
 	margin: 0 auto;
-    padding-left: 0px !important;
+    max-width: 1920px;
+    min-width: 1240px;
+}
+
+p {
+    font: 18.24px ropasansscproregular, sans-serif;
+}
+
+h3 {
+    font-family: 25px boxedregularbold;
 }
 
 a {
     text-decoration: none;
+    color: #ffffff;
+}
+
+a:active {
     color: #ffffff;
 }
 
@@ -57,7 +85,19 @@ header {
     background-color: #1c1c1c;
 }
 
+header a:visited {
+    color: #ffffff;
+}
+
+header a:active {
+    color: #ffffff;
+}
+
 header a {
+    color: #ffffff;
+}
+
+header a:hover {
     color: #ffffff;
 }
 
@@ -66,11 +106,20 @@ header a {
 }
 
 #imgJet {
-    margin-top: -3px;
+    margin-top: -1px;
+}
+
+#jetImg {
+    min-width: 37px;
 }
 
 #spanImg {
-    min-width: 33px;
+    min-width: 34px;
+    padding: 0px;
+}
+
+#spanImg2 {
+    min-width: 30px;
     padding: 0px;
 }
 
@@ -90,10 +139,12 @@ header a {
 	text-transform: uppercase;
 }
 
-.spanJetGnome {
+#spanJetGnome {
     font: 24px boxedmedium, sans-serif;
     color: #ffffff;
-    padding-right: 63px;
+    padding-right: 78px;
+    margin-left: 0px;
+
 }
 
 #spanGnome {
@@ -128,8 +179,8 @@ header a {
 }
 
 #back {
-    background: url(images/bg_back.jpg) repeat-x;
-    min-height: 1000px;  
+    background: url(images/bg_back.jpg) repeat-x,
+                url(images/gnomFooter.png) -115px bottom no-repeat;
 }
 
 #languages {
@@ -142,22 +193,20 @@ header a {
 }
 
 #langMenu {
-    height: 80px;
-	margin-bottom: 28px;
+    height: 79px;
+	margin-bottom: 0px;
 }
 
 #langSpace {
     width: 50px;
 }
 
-.nav {
-	float: left;
-    width: 300px;
-}
-
 .navWidth{
+	width: 300px;
+    float:left;
+    max-width: 300px;
+    min-width: 240px;
 }
-
 #menuScroll {
     background-color: #1c1c1c;
     padding-bottom: 1px;
@@ -167,8 +216,8 @@ header a {
 
 #navMenu {    
     text-align: center;
-    padding-top: 35px;
-    padding-bottom: 24px;
+    padding-top: 30px;
+    padding-bottom: 15px;
 }
 
 #navSpan {
@@ -186,20 +235,32 @@ li {
 
 #ulMenu {
     background-color: #1c1c1c;
-    margin-bottom: 35px;
-	-webkit-padding-start: 15%;    
+    margin-bottom: 5px;
+	padding-left: 70px;
 	text-align: left;
+    margin-left: 0px;
 }
 
 #ulMenu li{
     padding-bottom: 16px;
+    line-height: 18px;
 }
+
+
 
 .goldGame {
     color: #ffcc00;
 }
 
+a.goldGame:visited {
+    color: #ffcc00;
+}
+
 .topGame {
+    color: #ffffff;
+}
+
+a.topGame:visited {
     color: #ffffff;
 }
 
@@ -216,13 +277,53 @@ footer {
 }
 
 #money {
+    background-image: url(images/gnomgirl.png);
+	background-repeat: no-repeat;
     height: 30px;
 	background-color: #eaeaea;    
     height: 450px;
+    width: 100%;
 }
 
-#tableMoney {
-    height: 450px;
+@media (max-width: 1700px) {
+#money {
+    background-position: -100px;
+}
+}
+@media (max-width: 1400px) {
+#money {
+    background-position: -200px;
+}   
+}
+
+.textareaFoterGirl {
+    min-width: 380px;
+    width: 430px;
+    max-width: 430px;
+}
+
+.sendCommit {
+    width: 238px;
+    height: 95px;
+}
+
+.footerMoney {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#moneyHref {
+    width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#tableHrefMoney td {
+    padding-left: 10px;
+    padding-right: 10px;
+    
+    vertical-align: center;    
+    height: 64px;
 }
 
 .tdMoney {    
@@ -230,37 +331,31 @@ footer {
     max-width: 430px;
 }
 
-.colComit {
-    padding-top: 20px;
-    height: 380px;
-}
-
-.inCommit {
-    width: 95%;
-}
-
 #mainCommit {
     resize: none;
-    width: 95%;
+    width: 380px;
+    height: 240px;
 }
 
-#tdMoneyGirl {
-    background-image: url(images/gnomgirl.png);
-	background-repeat: no-repeat;
-    min-width: 350px;
-    height: 100%;
-    float: left;
+#moneyFooterNorm {
+    margin: 0px auto;
 }
 
-#tdMoneyMain {
-    height: 100%;
-    float: left;
+.tableMoneyLeft {
+    min-width: 175px;
+    max-width: 450px;
 }
 
+#tdMoneyMain {    
+    height: 344px;
+}
 
+.inputThemeQuestion {
+    width: 505px;
+}
 
-#moneyIcon {
-    float: unset;
+.inputFooterGirl {
+    width: 490px;
 }
 
 #ContextVipad {
@@ -270,7 +365,7 @@ footer {
 #context {
     background-color: #1a1a1a;
     height: 75px;
-/*    opacity: 0.5; */
+    opacity: 0.5;
     text-align: center;
 }
 
@@ -312,6 +407,10 @@ footer {
 	min-width: 30px;
 }
 
+#spaceFooterOther5 {
+	min-width: 30px;
+}
+
 #footerDivGold {	
 	width: 100%;
 	height: 450px;	
@@ -319,9 +418,6 @@ footer {
 	background-image: url(images/golds.png);
 	background-repeat: no-repeat;
 	background-position: 1520px -1px;
-}
-
-#spaceFooterOther5 {
 }
 	
 #tdFooterGame2 {
@@ -332,7 +428,13 @@ footer {
 	min-width: 120px;
 }
 
+footer a {
+    color: #ffffff;
+}
 
+footer a:visited {
+    color: #ffffff;
+}
 
 #ulFooter {
     padding-left: 0px;
@@ -343,10 +445,10 @@ footer {
 #ulFooter2 {
     padding-left: 0px;
 	margin-top: 50px;
-    min-width: 100px;
+    min-width: 151px;
 }
 
-.goldGame2 {
+#goldGame2 {
 	color: #8cda74;
 }
 
@@ -372,7 +474,7 @@ footer {
 
 #socialFooterSpace1 {
     width: 133px;
-    min-width: 50px;
+    min-width: 10px;
 }
 
 #socialIcon {
@@ -385,12 +487,17 @@ footer {
 
 #socialFooterSpace2 {
     max-width: 270px;
-    min-width: 100px;
+    min-width: 30px;
     width: 280px;
 }
 
 #mailTo {
     width: 80px;
+}
+
+#mailTo img {
+    min-width: 30px;
+    min-height: 30px;
 }
 
 #socialFooterSpace3 {
@@ -411,6 +518,12 @@ footer {
     width: 150px;
 }
 
+#socialFooterSpace5 {
+    max-width: 30px;
+    min-width: 10px;
+    width: 30px;
+}
+
 #languageFooter {
     min-width: 102px;
 }
@@ -420,8 +533,489 @@ footer {
     font: 30px boxedmedium;
 }
 
-
-
 section {
-    display: -webkit-box !important;
+    min-height: 1000px;
+    display: -webkit-box !important; 
 }
+
+#indexDiv {
+    background-image: url(images/gnom.png);
+	background-repeat: no-repeat;
+	background-position: 650px -245px;
+}
+
+@media (max-width: 1700px) {
+#indexDiv {
+	background-position: 550px -245px;
+}
+#footerDivGold {
+    background-position: 1500px -1px;
+}     
+}
+@media (max-width: 1600px) {
+#indexDiv {
+	background-position: 450px -245px;
+}     
+#footerDivGold {
+    background-position: 1400px -1px;
+}    
+}
+@media (max-width: 1500px) {
+#indexDiv {
+	background-position: 350px -245px;
+}     
+#footerDivGold {
+    background-position: 1300px -1px;
+}    
+}
+
+#leftIndexTable {
+    max-width: 115px;
+    width: 115px;
+}
+
+#rightIndexTable {
+    max-width: 390px;
+    width: 390px;
+}
+
+#mainIndexTable {
+    width: 1115px;
+    min-width: 1080px;
+}
+
+#indexH1 {
+    color: #363636;
+	text-align: left;	
+	font: 28px supermolotReg, sans-serif; 
+    padding-bottom: 13px;
+}
+
+#indexHtext {
+    color: #363636;
+	text-align: left;	
+	font: 23.33px boxedlight, sans-serif;  
+    padding-bottom: 30px;       
+}
+
+.yelloButton {
+    background: #f5c401;
+	text-align: center;	
+	font: 17.2px boxedmedium, sans-serif;      
+    height: 43px;
+    line-height: 43px;
+    color: #000000;
+}
+
+.spaceIndexDiv {
+   height: 235px; 
+}
+
+.gameBox {  
+    width: 580px;
+    height: 274px;     
+    float: left;       
+    font: 20px boxedbook, sans-serif;           
+    color: #ffffff;
+    line-height: 36.5px;
+}
+
+.gameBoxMini {  
+    width: 455px;
+    height: 274px;     
+    float: left;       
+    font: 25px boxedbook, sans-serif;           
+    color: #ffffff;
+    line-height: 36.5px;
+}
+
+.gameBoxMiniTable {
+    width: 100%;
+}
+
+.gameBoxSpaceMini {    
+    height: 180px;
+}
+
+
+#lineageBox{
+    background-image: url(images/linageGameBox.jpg);
+	background-repeat: no-repeat;    
+}
+
+#wowBox {    
+    background-image: url(images/wowlogo.jpg);
+	background-repeat: no-repeat;    
+}
+
+#eveBox {
+    background-image: url(images/EVE_logo.jpg);
+	background-repeat: no-repeat;        
+}
+
+#archeAge {
+    background-image: url(images/archeAge.jpg);
+	background-repeat: no-repeat;        
+}
+
+.gameBoxSpace {
+    height: 214px;
+}
+
+.tdGameBoxTextSpace1{
+    width: 22px; 
+}
+
+.tdGameBoxTextSpace2{
+    width: 24px; 
+}
+
+.tdGameBoxTextSpace3{
+    width: 16px; 
+}
+
+#cena{
+    width: 96px;
+    font: 26.67px boxedmedium, sans-serif;
+    line-height: 43px;
+}
+
+.indexSpaceWidth1 {
+    width: 48px;
+}
+
+.indexSpaceWidth2 {
+    width: 27px;
+}
+
+.indexSpaceHeight1 {
+    height: 20px;
+}
+
+.indexSpaceHeightEnd {
+    height: 50px;
+}
+
+.fileIndex {
+    background-image: url(images/file.png);
+    background-repeat: no-repeat;    
+    min-width: 214px;
+    text-align: center;	    
+    color: #ffffff;
+    font: 23.33px boxedregularbold, sans-serif;
+    line-height: 36.5px;    
+}
+
+.fileIndexText {
+    height: 90px;
+    min-width: 160px; 
+    width: 160px;
+    margin: auto;
+}
+
+.fileIndexImg {
+    margin-top: 45px;
+    margin-bottom: 28px;
+}
+
+@media (max-width: 1500px) {
+#ulMenu{
+    padding-left: 40px;
+}
+.navWidth{
+	width: 260px;
+    max-width: 260px;
+    min-width: 240px;
+} 
+}
+
+@media (max-width: 1370px) {
+#ulMenu{
+    padding-left: 20px;
+}
+.navWidth{
+	width: 200px;
+    min-width: 200px;
+} 
+}
+
+@media (max-width: 1305px) {
+#langSpace {
+    width: 20px;
+}
+#ulMenu{
+    padding-left: 20px;
+}
+.navWidth{
+	width: 175px;
+    min-width: 175px;
+} 
+#navSpan {
+    font: 18px boxedregular, sans-serif;      
+}
+#spanSideGame {
+    font: 13px boxedregular, sans-serif;
+}
+#ulMenu li {
+    font:14px  boxedlight, sans-serif;
+    line-height: 10px;
+}
+}
+
+/* Новостная лента Главная страница */
+
+#indexNewsH1 {
+    font: 26.67px supermolotbold, sans-serif;
+    margin-top: 85px;
+    margin-bottom: 55px;
+    color: #005aff;
+}
+
+.indexNewsH2 {
+    font: 24.33px ropasansscproregular, sans-serif;
+    margin: 24px;    
+}
+
+
+
+.indexNewsMainDiv {
+    height: 275px;
+    background-color: #ebebeb;
+    margin-bottom: 50px;
+    min-width: 1080px;
+    float: left;
+}
+
+.indexNewsDiv1 {
+    width: 630px;
+    min-width: 450px;
+    float: left;
+}
+
+.indexNewsDiv1Even {
+    width: 450px;
+    float: left;
+}
+
+.indexNewsDiv2 {
+    width: 450px;
+    height: 275px;
+    float: left;
+    overflow: hidden;
+}
+
+.indexNewsDiv2Even{
+    width: 630px;
+    height: 275px;
+    float: left;
+    overflow: hidden;
+}
+
+.indexNewsText {
+    height: 213px;
+}
+
+.indexNewsNav {
+    height: 37px;
+}
+
+.indexNewsSpan {
+    margin-left: 22px;
+}
+
+*.indexNewsSpan {
+    font: 18.24px ropasansscproregular, sans-serif;    
+    color: #424242;
+}
+
+*.indexNewsIcon {
+    font: 20px ropasansscproregular, sans-serif; 
+}
+
+.indexTableCommit {
+    width: 100%;
+    height: 37px;
+    margin: auto;
+    text-align: center;
+    border: 1px solid #7e7e7e;
+}
+.indexTableCommit td{
+    border: 1px solid #7e7e7e;
+    font: 20px ropasansscproregular, sans-serif; 
+}
+.newsCategory{
+    width: 320px;
+}
+.newsCategoryEven{
+    width: 165px;
+}
+.newsCategoryEven a{
+    color: #000000;
+}
+.newsCategory a{
+    color: #000000;
+}
+.newsDate{
+    width: 175px;
+}
+
+/* pagination navi >*/
+.previouspostslink {
+    background: none !important;
+    background-image: url(images/leftSlider.png) !important;   
+    background-repeat: no-repeat !important; 
+    background-position: center !important;
+    border: 1px !important;
+    padding: 3px 10px !important;
+}
+.nextpostslink {
+    background: none !important;
+    background-image: url(images/rightSlider.png) !important;   
+    background-repeat: no-repeat !important; 
+    background-position: center !important;
+    border: 1px !important;
+    padding: 3px 12px !important;
+}
+
+.wp-pagenavi {
+	clear: both;
+    float: right;
+}
+
+
+.wp-pagenavi a, .wp-pagenavi span {
+	text-decoration: none;
+    font-size: 16px;
+    background: #A3A3A3;
+    color: #ffffff;
+    border-bottom: 2px solid #d2a800;
+	padding: 6px 10px;
+	margin: 2px;
+}
+
+.wp-pagenavi a:hover, .wp-pagenavi span.current {
+	/*border-color: #000;*/
+    color: #ffffff;
+    border-bottom: 2px solid #ffcc00;
+}
+
+.wp-pagenavi span.current {
+	font-weight: bold;
+}
+
+
+/*< pagination navi */
+
+
+/*Слайдер Index Game CSS >*/
+[id^="example1a-"], [id^="example1b-"] {
+	text-decoration: none;
+	width:455px;
+	height:570px;
+}
+
+[id^="example1b-"] {
+	display:block;
+	position: relative ;
+	float:left;
+	width:36px;
+	height:16px;
+	margin-top: 600px;
+}
+
+[id^="example1a-"]{
+	display: block;
+	position: relative;
+}
+
+.no-touch  [id^="example1b-"] {
+    background-image: url(images/aSlider.png);
+    background-position: center;
+    background-repeat: no-repeat;    
+    min-width: 35px;
+    width: 58px;
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+.no-touch  [id^="example1b-"].active {
+    background-image: url(images/ahoverSlider.png);
+}
+
+
+
+#example1b-click-prev {
+    background-image: url(images/leftSlider.png);
+    margin-left: 50px;
+}
+
+#example1b-click-next {
+    background-image: url(images/rightSlider.png);
+}
+
+.h1SliderIndex {
+    font: 26.67px supermolotReg, sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    color: #ffffff;
+    height: 114px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.h1SliderIndexA, .h1SliderIndexA:visited, .h1SliderIndexA:active {
+    color:  #ffcc00;
+}
+
+/*< Слайдер Index Game CSS*/
+
+
+/* Single page > */
+
+#divMainSingle {
+    margin-left: 10px;
+    margin-top: 80px;
+}
+
+#comment {
+    width: 600px;
+    height: 160px;
+    resize: none;
+}
+
+#respond {
+    font: 26.67px supermolotReg, sans-serif;
+}
+
+/* < Single page */
+
+
+/* all tags > */
+.textCenter {
+    text-align: center !important;
+}
+
+.mt40 {
+    margin-top: 40px !important;
+}
+
+.ml50 {
+    margin-left: 50px !important;
+}
+
+.ml25 {
+    margin-left: 25px !important;
+}
+
+.mt25 {
+    margin-top: 25px !important;
+}
+
+.fl {
+    float: left !important;
+}
+
+.pl65 {
+    padding-left: 65px !important;
+}
+/* < all tags */

@@ -1,4 +1,5 @@
-<div class="nav">
+<nav class="navWidth">
+    
                 <table id="langMenu">
                     <tbody>
                         <tr>
@@ -28,7 +29,8 @@
                         <li><a class="topGame" href="#">Tera Online</a></li>
                         <li><a class="goldGame" href="#">World Of Warcraft</a></li>
                     </ul>
-					<a href="#"><span id="spanSideGame">перейти на страницу с играми</span></a>
+					<a href="<?php echo home_url();?>/buy-gold/"><span id="spanSideGame">перейти на страницу с играми</span></a>
+                    <div style="height: 10px;"><div>
                 </div>
-	
-</div>
+	<div></div>
+</nav>
