@@ -72,12 +72,16 @@
                         <td id="spanImg"></td>
                         <td class="tdHead" id="jetImg">
                             <a href="<?php echo home_url();?>">
+                                <div>
                                 <img id="imgJet" src="<?php echo get_stylesheet_directory_uri()?>/images/jet.png">
+                                </div>
                             </a>
                         </td>
                         <td id="spanImg2"></td>
                         <td class="tdHead">
-                            <span id="spanJetGnome">JET<span id="spanGnome">GNOME</span>.COM</span>
+                            <a href="<?php echo home_url();?>">
+                                <span id="spanJetGnome">JET<span id="spanGnome">GNOME</span>.COM</span>
+                            </a>
                         </td>
                         <td>
                             <a class="aHead" href="#">ВХОД</a>

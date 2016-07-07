@@ -22,7 +22,7 @@
                         <td id="spaceFooterOther1"></td>
                         <td class="tdFooter">
                             <ul id="ulFooter">
-                                <li class="liUlFooter"><a href="#">КУПИТЬ</a></li>
+                                <li class="liUlFooter"><a href="<?php echo home_url();?>/buy-gold/">КУПИТЬ</a></li>
                                 <li class="liUlFooter"><a href="#">ПРОДАТЬ</a></li>
                                 <li class="liUlFooter"><a href="#">НОВОСТИ</a></li>
                                 <li class="liUlFooter"><a href="#">ГАРАНТИЯ</a></li>
@@ -78,7 +78,9 @@
                             </td>
                             <td id="spaceImgFooterR"></td>
                             <td class="tdHead" id="textJet">
-                                <span class="spanJetGnomeFooter">JET<span id="spanGnome">GNOME</span>.COM</span>
+                                <a href="<?php echo home_url();?>">
+                                    <span class="spanJetGnomeFooter">JET<span id="spanGnome">GNOME</span>.COM</span>
+                                </a>
                             </td>
                             <td id="socialFooterSpace1"></td>
                             <td id="socialIcon">
@@ -87,7 +89,7 @@
                                 <a href="#"><img class="socialImg" src="<?php echo get_stylesheet_directory_uri()?>/images/twitter.jpg"></a>
                                 <a href="#"><img class="socialImg" src="<?php echo get_stylesheet_directory_uri()?>/images/ok.jpg"></a>
                                 <a href="#"><img class="socialImg" src="<?php echo get_stylesheet_directory_uri()?>/images/skype.jpg"></a>
-                                <a href="#"><img class="socialImg" src="<?php echo get_stylesheet_directory_uri()?>/images/youtube.jpg"></a>
+                                <a href="https://www.youtube.com/"><img class="socialImg" src="<?php echo get_stylesheet_directory_uri()?>/images/youtube.jpg"></a>
                             </td>
                             <td id="socialFooterSpace2"></td>
                             <td id="mailTo">

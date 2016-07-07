@@ -167,6 +167,10 @@ header a:hover {
     color:white;
 }
 
+.tdHead a{
+    text-decoration: none !important;
+}
+
 #tdHeadReg {
     width: 40px;
     min-width: 20px;
