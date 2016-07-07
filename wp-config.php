@@ -17,6 +17,13 @@
  *
  * @package WordPress
  */
+ 
+define(WP_PROXY_HOST, 'bproxy.ug.mts.ru'); // ваш адрес
+define(WP_PROXY_PORT, 3131); // ваш порт
+define(WP_PROXY_USERNAME, 'vvryzhov');
+define(WP_PROXY_PASSWORD, 'Rhfrty347825');
+
+
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */

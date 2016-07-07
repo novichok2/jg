@@ -13,7 +13,14 @@ function WPtouchAjax( actionName, actionParams, callback ) {
 	});
 }
 
-jQuery( 'table' ).parent( 'p,div' ).addClass( 'table-parent' );
+jQuery( '#content table' ).each( function() {
+	parentElement = jQuery( this ).parent( 'p,div' );
+	if ( parentElement.hasClass( 'post' ) === false ) {
+		parentElement.addClass( 'table-parent' );
+	} else {
+		jQuery( this ).wrap( '<div class="table-parent"></div>' );
+	}
+});
 
 jQuery( '#footer .back-to-top' ).click( function( e ) {
 	e.preventDefault();
@@ -21,6 +28,9 @@ jQuery( '#footer .back-to-top' ).click( function( e ) {
 });
 
 function doWPtouchReady() {
+	// Parse query vars json
+	wptouchMain.query_vars = jQuery.parseJSON( wptouchMain.query_vars );
+
 	// Shortcode
 	var shortcodeDiv = jQuery( '.wptouch-sc-content' );
 

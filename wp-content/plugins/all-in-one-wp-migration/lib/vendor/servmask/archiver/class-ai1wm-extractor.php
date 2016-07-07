@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright (C) 2014 ServMask Inc.
+ * Copyright (C) 2014-2016 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +22,7 @@
  * ███████║███████╗██║  ██║ ╚████╔╝ ██║ ╚═╝ ██║██║  ██║███████║██║  ██╗
  * ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
  */
+
 class Ai1wm_Extractor extends Ai1wm_Archiver {
 
 	/**
@@ -46,15 +46,17 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 	}
 
 	/**
-	 * Get the number of files in an archive
+	 * Get the total files in an archive
 	 *
-	 * @return int Number of files found in the archive
+	 * @return int Total files in the archive
 	 * @throws \Ai1wm_Not_Accesible_Exception
 	 * @throws \Ai1wm_Not_Readable_Exception
 	 */
-	public function get_number_of_files() {
-		// files counter
-		$files_found = 0;
+	public function get_total_files() {
+		fseek( $this->file_handle, SEEK_SET, 0 );
+
+		// total files
+		$total_files = 0;
 
 		while ( $block = $this->read_from_handle( $this->file_handle, 4377, $this->filename ) ) {
 			// end block has been reached
@@ -66,24 +68,56 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 			$data = $this->get_data_from_block( $block );
 
 			// we have a file, increment the counter
-			$files_found++;
+			$total_files++;
 
 			// skip file content so we can move forward to the next file
 			$this->set_file_pointer( $this->file_handle, $data['size'], $this->filename );
 		}
 
-		return $files_found;
+		return $total_files;
 	}
 
-	public function extract_one_file_to( $location, $exclude = array(), $offset = 0, $timeout = 0 ) {
-		if ( false === file_exists( $location ) ) {
+	/**
+	 * Get the total size of files in an archive
+	 *
+	 * @return int Total size of files in the archive
+	 * @throws \Ai1wm_Not_Accesible_Exception
+	 * @throws \Ai1wm_Not_Readable_Exception
+	 */
+	public function get_total_size() {
+		fseek( $this->file_handle, SEEK_SET, 0 );
+
+		// total size
+		$total_size = 0;
+
+		while ( $block = $this->read_from_handle( $this->file_handle, 4377, $this->filename ) ) {
+			// end block has been reached
+			if ( $block === $this->eof ) {
+				continue;
+			}
+
+			// get file data from the block
+			$data = $this->get_data_from_block( $block );
+
+			// we have a file, increment the counter
+			$total_size += $data['size'];
+
+			// skip file content so we can move forward to the next file
+			$this->set_file_pointer( $this->file_handle, $data['size'], $this->filename );
+		}
+
+		return $total_size;
+	}
+
+	public function extract_one_file_to( $location, $exclude = array(), $old_paths = array(), $new_paths = array(), $offset = 0, $timeout = 0 ) {
+		if ( false === is_dir( $location ) ) {
 			throw new Ai1wm_Not_Readable_Exception( sprintf( __( '%s doesn\'t exist', AI1WM_PLUGIN_NAME ), $location ) );
 		}
 
 		$block = $this->read_from_handle( $this->file_handle, 4377, $this->filename );
 
+		// we reached end of file, set the pointer to the end of the file so that feof returns true
 		if ( $block === $this->eof ) {
-			// we reached end of file, set the pointer to the end of the file so that feof returns true
 			@fseek( $this->file_handle, 1, SEEK_END );
 			@fgetc( $this->file_handle );
 			return;
@@ -99,27 +133,36 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 			$filename = $data['path'] . '/' . $data['filename'];
 		}
 
-		// should we skip this file?
-		if ( in_array( $filename, $exclude ) ) {
-			// we don't have a match, skip file content
-			$this->set_file_pointer( $this->file_handle, $data['size'], $this->filename );
-			return;
-		}
-
-		// we need to build the path for the file
+		// we need to build the path
 		$path = str_replace( '/', DIRECTORY_SEPARATOR, $data['path'] );
 
-		// append prepend extract location
-		$path = $location . DIRECTORY_SEPARATOR . $path;
+		// we need to build the path for the file
+		$filename = str_replace( '/', DIRECTORY_SEPARATOR, $filename );
+
+		// should we skip this file?
+		for ( $i = 0; $i < count( $exclude ); $i++ ) {
+			if ( strpos( $filename . DIRECTORY_SEPARATOR, $exclude[$i] . DIRECTORY_SEPARATOR ) === 0 ) {
+				$this->set_file_pointer( $this->file_handle, $data['size'], $this->filename );
+				return;
+			}
+		}
+
+		// replace extract paths
+		for ( $i = 0; $i < count( $old_paths ); $i++ ) {
+			if ( strpos( $path . DIRECTORY_SEPARATOR, $old_paths[$i] . DIRECTORY_SEPARATOR ) === 0 ) {
+				$path = substr_replace( $path, $new_paths[$i], 0, strlen( $old_paths[$i] ) );
+				break;
+			}
+		}
 
 		// check if location doesn't exist, then create it
-		if ( false === file_exists( $path ) ) {
-			mkdir( $path, 0755, true );
+		if ( false === is_dir( $location . DIRECTORY_SEPARATOR . $path ) ) {
+			mkdir( $location . DIRECTORY_SEPARATOR . $path, 0755, true );
 		}
 
 		try {
 			// we have a match, let's extract the file
-			if ( ( $offset = $this->extract_to( $path . DIRECTORY_SEPARATOR . $data['filename'], $data, $offset, $timeout ) ) ) {
+			if ( ( $offset = $this->extract_to( $location . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . basename( $filename ), $data, $offset, $timeout ) ) ) {
 				return $offset;
 			}
 		} catch ( Exception $e ) {
@@ -133,17 +176,16 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 	 *
 	 * @param string $location Location where to extract files
 	 * @param array  $files    Files to extract
+	 * @param array  $offset   File offset
+	 * @param int    $timeout  Process timeout
 	 */
 	public function extract_by_files_array( $location, $files = array(), $offset = 0, $timeout = 0 ) {
-		if ( false === file_exists( $location ) ) {
+		if ( false === is_dir( $location ) ) {
 			throw new Ai1wm_Not_Readable_Exception( sprintf( __( '%s doesn\'t exist', AI1WM_PLUGIN_NAME ), $location ) );
 		}
 
 		// we read until we reached the end of the file, or the files we were looking for were found
-		while (
-			($block = $this->read_from_handle( $this->file_handle, 4377, $this->filename )) &&
-			( count( $files ) > 0 )
-		) {
+		while ( ( $block = $this->read_from_handle( $this->file_handle, 4377, $this->filename ) ) ) {
 			// end block has been reached and we still have files to extract
 			// that means the files don't exist in the archive
 			if ( $block === $this->eof ) {
@@ -162,21 +204,39 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 				$filename = $data['path'] . '/' . $data['filename'];
 			}
 
+			// we need to build the path
+			$path = str_replace( '/', DIRECTORY_SEPARATOR, $data['path'] );
+
+			// we need to build the path for the file
+			$filename = str_replace( '/', DIRECTORY_SEPARATOR, $filename );
+
+			// set include flag
+			$include = false;
+
+			// files to extract
+			for ( $i = 0; $i < count( $files ); $i++ ) {
+				if ( strpos( $filename . DIRECTORY_SEPARATOR, $files[$i] . DIRECTORY_SEPARATOR ) === 0 ) {
+					$include = true;
+					break;
+				}
+			}
+
 			// do we have a match?
-			if ( in_array( $filename, $files ) ) {
+			if ( $include ) {
+				// check if location doesn't exist, then create it
+				if ( false === is_dir( $location . DIRECTORY_SEPARATOR . $path ) ) {
+					mkdir( $location . DIRECTORY_SEPARATOR . $path, 0755, true );
+				}
+
 				try {
 					// we have a match, let's extract the file and remove it from the array
-					if ( ( $offset = $this->extract_to( $location . DIRECTORY_SEPARATOR . $data['filename'], $data, $offset, $timeout ) ) ) {
+					if ( ( $offset = $this->extract_to( $location . DIRECTORY_SEPARATOR . $filename, $data, $offset, $timeout ) ) ) {
 						return $offset;
 					}
 				} catch ( Exception $e ) {
 					// we don't have file permissions, skip file content
 					$this->set_file_pointer( $this->file_handle, $data['size'], $this->filename );
 				}
-
-				// let's unset the file from the files array
-				$key = array_search( $data['filename'], $files );
-				unset( $files[$key] );
 			} else {
 				// we don't have a match, skip file content
 				$this->set_file_pointer( $this->file_handle, $data['size'], $this->filename );
@@ -240,7 +300,7 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 			// read the file in chunks of 512KB from archiver
 			$content = $this->read_from_handle( $this->file_handle, $chunk_size, $this->filename );
 
-			// remote the amount of bytes we read
+			// remove the amount of bytes we read
 			$data['size'] -= $chunk_size;
 
 			// write file contents
@@ -312,6 +372,11 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 		return ! feof( $this->file_handle );
 	}
 
+	/**
+	 * Get current file pointer
+	 *
+	 * return int
+	 */
 	public function get_file_pointer() {
 		$result = ftell( $this->file_handle );
 

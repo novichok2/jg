@@ -2,7 +2,7 @@
 /*
 	Plugin Name: WPtouch Mobile Plugin
 	Plugin URI: http://www.wptouch.com/
-	Version: 4.0.3
+	Version: 4.1.5
 	Description: Make a beautiful mobile-friendly version of your website with just a few clicks
 	Author: BraveNewCode Inc.
 	Author URI: http://www.bravenewcode.com/
@@ -14,7 +14,7 @@
 
 function wptouch_create_four_object() {
 	if ( !defined( 'WPTOUCH_IS_PRO' ) ) {
-		define( 'WPTOUCH_VERSION', '4.0.3' );
+		define( 'WPTOUCH_VERSION', '4.1.5' );
 
 		define( 'WPTOUCH_BASE_NAME', basename( __FILE__, '.php' ) . '.php' );
 		define( 'WPTOUCH_DIR', WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . basename( __FILE__, '.php' ) );
@@ -53,8 +53,18 @@ function wptouch_create_four_object() {
 	}
 }
 
+function is_wptouch_pro_active() {
+	$active_plugins = get_option( 'active_plugins', array() );
+	if ( in_array( 'wptouch-pro/wptouch-pro.php', $active_plugins ) ) {
+		return true;
+	}
+
+	return false;
+}
+
 function wptouch_disable_self() {
-	if ( defined( 'WPTOUCH_IS_PRO' ) ) {
+	if ( is_wptouch_pro_active() ) {
+		var_dump( 'hai' );
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 	}
 }
@@ -107,4 +117,16 @@ function wptouch_free_order_sections( $page_info, $page_name ) {
 	}
 
 	return $page_info;
+}
+
+add_filter( 'wptouch_theme_title', 'wptouch_bauhaus_pro' );
+function wptouch_bauhaus_pro( $name ) {
+	if ( $name == 'Bauhaus' ) { $name = 'Bauhaus Pro'; }
+	return $name;
+}
+
+if ( !is_wptouch_pro_active() ) {
+	function wptouch_is_update_available() {
+		return false;
+	}
 }

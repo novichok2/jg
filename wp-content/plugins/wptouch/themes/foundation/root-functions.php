@@ -147,10 +147,6 @@ function foundation_setting_defaults( $settings ) {
 	$settings->excluded_categories = '';
 	$settings->excluded_tags = '';
 
-	// Login
-	$settings->show_login_box = false;
-	$settings->show_login_links = false;
-
 	// Branding
 	$settings->typography_sets = 'default';
 
@@ -214,9 +210,11 @@ function foundation_setting_defaults( $settings ) {
 
 	// Featured Slider
 	$settings->featured_enabled = true;
+	$settings->featured_style = 'enhanced';
 	$settings->featured_autoslide = false;
 	$settings->featured_continuous = false;
 	$settings->featured_grayscale = false;
+	$settings->featured_comments = false;
 	$settings->featured_type = 'latest';
 	$settings->featured_tag = '';
 	$settings->featured_category = '';
@@ -286,7 +284,6 @@ function foundation_handle_footer() {
 
 function foundation_handle_custom_css_declarations() {
 	$settings = foundation_get_settings();
-
 	if( $settings->custom_css_declarations ) {
 		$styles = apply_filters( 'foundation_custom_css_declarations', $settings->custom_css_declarations );
 		$trimmed_styles = trim( $styles );
@@ -365,7 +362,7 @@ function foundation_setup_viewport(){
 function foundation_render_theme_settings( $page_options ) {
 	wptouch_add_sub_page( FOUNDATION_PAGE_GENERAL, 'foundation-page-theme-settings', $page_options );
 
-	if ( defined( 'WPTOUCH_IS_FREE' ) ) {
+	if ( !wptouch_admin_use_customizer() ) {
 		if ( foundation_has_theme_colors() ) {
 			$color_settings = array();
 

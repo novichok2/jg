@@ -10,7 +10,7 @@
 						<div style="width: 520px; height: 170px;"> 
 							<div id="indexH1">Добро пожаловать на JetGnome.com</div>
 							<div id="indexHtext">Реактивные гномы собрали для вас золото со всего мира и готовы делиться богатством</div>
-							<a href="">
+							<a href="<?php echo home_url();?>/buy-gold/">
 							<div class="yelloButton block" style="width: 275px; float: right;">ВЫБЕРИТЕ ИГРУ ДЛЯ ПОКУПКИ</div>
 							</a>												
 						</div>

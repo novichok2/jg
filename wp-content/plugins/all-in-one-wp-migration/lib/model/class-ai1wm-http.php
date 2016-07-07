@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014 ServMask Inc.
+ * Copyright (C) 2014-2016 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,10 +27,15 @@ class Ai1wm_Http {
 
 	public static $transports = array( 'ai1wm', 'curl' );
 
-	public static function get( $url, $params = array() ) {
+	public static function post( $url, $params = array() ) {
+
+		// Check the status, maybe we need to stop it
+		if ( ! is_file( ai1wm_export_path( $params ) ) && ! is_file( ai1wm_import_path( $params ) ) ) {
+			exit;
+		}
 
 		// Get IP address
-		$ip = get_site_option( AI1WM_URL_IP, false, false );
+		$ip = get_option( AI1WM_URL_IP );
 
 		// HTTP request
 		Ai1wm_Http::request( $url, $ip, $params );
@@ -39,11 +44,11 @@ class Ai1wm_Http {
 	public static function resolve( $url ) {
 
 		// Reset IP address and transport layer
-		delete_site_option( AI1WM_URL_IP );
-		delete_site_option( AI1WM_URL_TRANSPORT );
+		delete_option( AI1WM_URL_IP );
+		delete_option( AI1WM_URL_TRANSPORT );
 
 		// Set secret
-		$secret_key = get_site_option( AI1WM_SECRET_KEY, false, false );
+		$secret_key = get_option( AI1WM_SECRET_KEY );
 
 		// Set scheme
 		$scheme = parse_url( $url, PHP_URL_SCHEME );
@@ -80,18 +85,11 @@ class Ai1wm_Http {
 				// HTTP response
 				for ( $i = 0; $i < 5; $i++, sleep( 1 ) ) {
 
-					// Clear WP options cache
-					wp_cache_flush();
-
-					// Clear WP notoptions cache
-					wp_cache_delete( 'notoptions', 'options' );
-
-					// Set WP notoptions cache
-					wp_cache_set( 'notoptions', array(), 'options' );
+					// Flush WP cache
+					ai1wm_cache_flush();
 
 					// Is valid transport layer?
-					if ( get_site_option( AI1WM_URL_IP, false, false )
-							&& get_site_option( AI1WM_URL_TRANSPORT, false, false ) ) {
+					if ( get_option( AI1WM_URL_IP ) && get_option( AI1WM_URL_TRANSPORT ) ) {
 						return;
 					}
 				}
@@ -118,7 +116,7 @@ class Ai1wm_Http {
 		$headers = array( 'Accept' => '*/*' );
 
 		// Add authorization header
-		if ( ( $user = get_site_option( AI1WM_AUTH_USER ) ) && ( $password = get_site_option( AI1WM_AUTH_PASSWORD ) ) ) {
+		if ( ( $user = get_option( AI1WM_AUTH_USER ) ) && ( $password = get_option( AI1WM_AUTH_PASSWORD ) ) ) {
 			$headers['Authorization'] = sprintf( 'Basic %s', base64_encode( "{$user}:{$password}" ) );
 		}
 
@@ -154,6 +152,6 @@ class Ai1wm_Http {
 	}
 
 	public static function transports( $transports ) {
-		return get_site_option( AI1WM_URL_TRANSPORT, Ai1wm_Http::$transports, false );
+		return get_option( AI1WM_URL_TRANSPORT, Ai1wm_Http::$transports );
 	}
 }

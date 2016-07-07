@@ -48,7 +48,7 @@
 		color: #fff;
 	}
 
-	<?php if ( version_compare( $version, '3.8', '<' ) ): ?>
+	<?php if ( version_compare( $version, '3.8', '<' ) ) : ?>
 	.toplevel_page_site-migration-export > div.wp-menu-image {
 		background: none !important;
 	}
@@ -56,7 +56,7 @@
 	.toplevel_page_site-migration-export > div.wp-menu-image:before {
 		line-height: 27px !important;
 		content: '';
-		background: url('<?php echo esc_url( AI1WM_URL ); ?>/lib/view/assets/img/logo.svg') no-repeat center center;
+		background: url('<?php echo esc_url( AI1WM_URL ); ?>/lib/view/assets/img/logo-20x20.png') no-repeat center center;
 		speak: none !important;
 		font-style: normal !important;
 		font-weight: normal !important;
@@ -68,12 +68,12 @@
 		-moz-osx-font-smoothing: grayscale !important;
 	}
 
-	<?php else: ?>
+	<?php else : ?>
 	.toplevel_page_site-migration-export > div.wp-menu-image:before {
 		position: relative;
 		display: inline-block;
 		content: '';
-		background: url('<?php echo esc_url( AI1WM_URL ); ?>/lib/view/assets/img/logo.svg') no-repeat center center;
+		background: url('<?php echo esc_url( AI1WM_URL ); ?>/lib/view/assets/img/logo-20x20.png') no-repeat center center;
 		speak: none !important;
 		font-style: normal !important;
 		font-weight: normal !important;
@@ -89,6 +89,5 @@
 	.wp-menu-open.toplevel_page_site-migration-export > a {
 		background-color: #111 !important;
 	}
-
 	<?php endif; ?>
 </style>

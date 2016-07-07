@@ -1,9 +1,9 @@
 <?php
 
-define( 'BAUHAUS_THEME_VERSION', '1.6.2' );
+define( 'BAUHAUS_THEME_VERSION', '1.6.8' );
 define( 'BAUHAUS_SETTING_DOMAIN', 'bauhaus' );
 define( 'BAUHAUS_DIR', wptouch_get_bloginfo( 'theme_root_directory' ) );
-define( 'BAUHAUS_URL', wptouch_get_bloginfo( 'theme_root_url' ) );
+define( 'BAUHAUS_URL', wptouch_get_bloginfo( 'theme_parent_url' ) );
 
 // Bauhaus actions
 add_action( 'foundation_init', 'bauhaus_theme_init' );
@@ -14,6 +14,7 @@ add_action( 'customize_controls_enqueue_scripts', 'bauhaus_enqueue_customizer_sc
 add_filter( 'wptouch_registered_setting_domains', 'bauhaus_setting_domain' );
 add_filter( 'wptouch_setting_defaults_bauhaus', 'bauhaus_setting_defaults' );
 add_filter( 'wptouch_setting_defaults_foundation', 'bauhaus_foundation_setting_defaults' );
+add_filter( 'wptouch_featured_slider_settings', 'bauhaus_featured_slider_settings' );
 
 add_filter( 'wptouch_body_classes', 'bauhaus_body_classes' );
 add_filter( 'wptouch_post_classes', 'bauhaus_post_classes' );
@@ -26,7 +27,10 @@ add_filter( 'wptouch_post_footer', 'bauhaus_footer_version' );
 add_filter( 'wptouch_has_post_thumbnail', 'bauhaus_handle_has_thumbnail' );
 add_filter( 'wptouch_the_post_thumbnail', 'bauhaus_handle_the_thumbnail' );
 add_filter( 'wptouch_get_post_thumbnail', 'bauhaus_handle_get_thumbnail' );
+add_filter( 'post_thumbnail_html', 'bauhaus_handle_thumbnail_html', 10, 5 );
 add_filter( 'wptouch_setting_version_compare', 'bauhaus_setting_version_compare', 10, 2 );
+
+add_filter( 'foundation_featured_use_swipe', '__return_false' );
 
 function bauhaus_setting_domain( $domain ) {
 	$domain[] = BAUHAUS_SETTING_DOMAIN;
@@ -53,6 +57,7 @@ function bauhaus_setting_defaults( $settings ) {
 
 	// Bauhaus menu default
 	$settings->bauhaus_menu_style = 'off-canvas';
+	$settings->bauhaus_menu_position = 'left-side';
 
 
 	// Theme colors
@@ -72,6 +77,8 @@ function bauhaus_setting_defaults( $settings ) {
 	$settings->bauhaus_use_thumbnails = 'index_single_page';
 	$settings->bauhaus_thumbnail_type = 'featured';
 	$settings->bauhaus_thumbnail_custom_field = '';
+
+	$settings->featured_slider_page = false;
 
 	return $settings;
 }
@@ -95,8 +102,10 @@ function bauhaus_theme_init() {
 			'sharing',
 			'social-links',
 			'featured',
+			'login',
 			// Modules w/o settings
 			'menu',
+			'owlcarousel',
 			'spinjs',
 			'tappable',
 			'fastclick',
@@ -227,6 +236,20 @@ function bauhaus_header_settings( $header_settings ) {
 		array(
 			'off-canvas' => __( 'Off-canvas', 'wptouch-pro' ),
 			'drop-down' => __( 'Drop-down', 'wptouch-pro' )
+		),
+		BAUHAUS_SETTING_DOMAIN
+	);
+
+	$header_settings[] = wptouch_add_setting(
+		'list',
+		'bauhaus_menu_position',
+		__( 'Menu position', 'wptouch-pro' ),
+		false,
+		WPTOUCH_SETTING_BASIC,
+		'1.6.4',
+		array(
+			'left-side' => __( 'Left side', 'wptouch-pro' ),
+			'right-side' => __( 'Right side', 'wptouch-pro' )
 		),
 		BAUHAUS_SETTING_DOMAIN
 	);
@@ -389,6 +412,27 @@ function bauhaus_handle_get_thumbnail( $current_thumbnail ) {
 	return $current_thumbnail;
 }
 
+function bauhaus_handle_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr  ) {
+	$settings = bauhaus_get_settings();
+
+	if ( $settings->bauhaus_thumbnail_type == 'custom_field' ) {
+		if ( $settings->bauhaus_thumbnail_custom_field ) {
+			global $post;
+
+			$possible_image = get_post_meta( $post->ID, $settings->bauhaus_thumbnail_custom_field, true );
+
+			$classes = '';
+			if ( strlen( $possible_image ) > 0 ) {
+				if ( isset( $attr[ 'class' ] ) ) { $classes = 'class="' . $attr[ 'class' ] . '"'; }
+
+				return '<img src="' . $possible_image . '" ' . $classes . '>';
+			}
+ 		}
+	}
+
+	return $html;
+}
+
 function bauhaus_if_infinite_scroll_enabled(){
 	$settings = bauhaus_get_settings();
 
@@ -403,4 +447,65 @@ function bauhaus_if_off_canvas_enabled(){
 	if ( $settings->bauhaus_menu_style == 'off-canvas' ) {
 		foundation_add_theme_support( 'pushit' );
 	}
+}
+
+add_filter( 'wptouch_amp_header_color', 'bauhaus_amp_header_color' );
+function bauhaus_amp_header_color( $color ) {
+	$settings = bauhaus_get_settings();
+	return $settings->bauhaus_header_color;
+}
+
+add_filter( 'wptouch_amp_link_color', 'bauhaus_amp_link_color' );
+function bauhaus_amp_link_color( $color ) {
+	$settings = bauhaus_get_settings();
+	return $settings->bauhaus_link_color;
+}
+
+add_filter( 'wptouch_amp_show_author', 'bauhaus_amp_show_author' );
+function bauhaus_amp_show_author() {
+	$settings = bauhaus_get_settings();
+	return $settings->bauhaus_show_author;
+}
+
+add_filter( 'wptouch_amp_show_date', 'bauhaus_amp_show_date' );
+function bauhaus_amp_show_date() {
+	$settings = bauhaus_get_settings();
+	return $settings->bauhaus_show_date;
+}
+
+add_filter( 'wptouch_amp_show_taxonomy', 'bauhaus_amp_show_taxonomy' );
+function bauhaus_amp_show_taxonomy() {
+	$settings = bauhaus_get_settings();
+	return $settings->bauhaus_show_taxonomy;
+}
+
+function bauhaus_get_page_list() {
+	$contents = get_pages();
+	$pages = array( 'Select&hellip;' );
+	foreach ( $contents as $page ) {
+		$pages[ $page->ID ] = $page->post_title;
+	}
+	return $pages;
+}
+
+function bauhaus_allow_featured_slider_override() {
+	$settings = wptouch_get_settings();
+	$foundation_settings = foundation_get_settings();
+	return $settings->homepage_landing != 'none' && $settings->homepage_landing != $foundation_settings->latest_posts_page;
+}
+
+function bauhaus_featured_slider_settings( $featured_slider_settings ) {
+	if ( bauhaus_allow_featured_slider_override() ) {
+		$featured_slider_settings[] = wptouch_add_pro_setting(
+			'list',
+			'featured_slider_page',
+			__( 'Featured Slider Page', 'wptouch-pro' ),
+			__( 'Choose which page should display the featured slider', 'wptouch-pro' ),
+			WPTOUCH_SETTING_BASIC,
+			'4.1.15',
+			bauhaus_get_page_list()
+		);
+	}
+
+	return $featured_slider_settings;
 }
