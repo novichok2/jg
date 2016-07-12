@@ -4831,7 +4831,7 @@ msgstr "Ошибка базы данных"
 #: wp-includes/functions.php:3598 wp-includes/ms-load.php:286
 #: wp-includes/wp-db.php:1535
 msgid "Error establishing a database connection"
-msgstr "Ошибка установки соединения с базой данных"
+msgstr "Ошибка установки соединения с базой данных!!"
 
 #. translators: %s: number of comments
 #: wp-includes/comment-template.php:873

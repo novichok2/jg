@@ -18,24 +18,24 @@
  * @package WordPress
  */
  
-define(WP_PROXY_PORT, 3131); // ваш порт
-define(WP_PROXY_USERNAME, 'vvryzhov');
-define(WP_PROXY_PASSWORD, 'Rhfrty347825');
+//define(WP_PROXY_PORT, 3131); // ваш порт
+//define(WP_PROXY_USERNAME, 'vvryzhov');
+//define(WP_PROXY_PASSWORD, 'Rhfrty347825');
 
 
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'bitnami_wordpress');
+define('DB_NAME', 'd51oqbqkd14djk');
 
 /** MySQL database username */
-define('DB_USER', 'bn_wordpress');
+define('DB_USER', 'oztincixmgawau');
 
 /** MySQL database password */
-define('DB_PASSWORD', '5ae68bd086');
+define('DB_PASSWORD', 'ZFU1Uhkz7DLNdYb6qcrcdY3NXU');
 
 /** MySQL hostname */
-define('DB_HOST', '127.0.0.1:3306');
+define('DB_HOST', 'ec2-23-21-71-9.compute-1.amazonaws.com:5432');
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
